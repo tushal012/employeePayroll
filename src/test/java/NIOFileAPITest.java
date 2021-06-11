@@ -11,6 +11,11 @@ import java.util.stream.IntStream;
 public class NIOFileAPITest {
     private static String HOME = System.getProperty("user.home");
     private static String PLAY_WITH_NIO = "TempPlayGround";
+
+    private static class FileUtils {
+        public static void deleteFiles(File toFile) {
+        }
+    }
     
 
 
@@ -45,9 +50,14 @@ public class NIOFileAPITest {
         Files.newDirectoryStream(playPath,path -> path.toFile().isFile() && path.toString().startsWith("temp"))
                 .forEach(System.out::println);
     }
-
-    private static class FileUtils {
-        public static void deleteFiles(File toFile) {
-        }
+    @Test
+    public void givenDirectoryWatchedListAllThenActivities() throws IOException {
+        Path dir = Paths.get(HOME+ "/"+PLAY_WITH_NIO);
+        Files.list(dir).filter(Files::isRegularFile).forEach(System.out::println);
+        new WatchService(dir).processEvent();
     }
+
+
+
+
 }
