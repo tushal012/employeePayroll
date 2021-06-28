@@ -24,7 +24,7 @@ public class WatchService {
     }
 
     private void scanAndRegisterDirectories(final Path start) throws IOException {
-        Files.walkFileTree(start.new SimpleFileVisitor<Path> () {
+        Files.walkFileTree(start.new SimpleFileVisitor() {
 
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
@@ -35,14 +35,12 @@ public class WatchService {
     }
 
 
-
-
     private WatchKey take() {
         return null;
     }
 
 
-     void processEvent() throws InterruptedException {
+    void processEvent() throws InterruptedException {
         while (true) {
             WatchKey key;
             key = watcher.take();
